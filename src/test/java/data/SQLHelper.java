@@ -39,7 +39,7 @@ public class SQLHelper {
     }
 
     @SneakyThrows
-    public static void getVasyaBlockedStatus() {
+    public static void getUserBlockedStatus() {
         var SQLStatus = "SELECT status FROM users WHERE login='vasya'";
         var connection = getConnection();
         var status = runner.query(connection, SQLStatus, new ScalarHandler<String>());

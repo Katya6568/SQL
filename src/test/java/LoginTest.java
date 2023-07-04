@@ -65,7 +65,7 @@ class LoginTest {
     void shouldBlockRegisteredUserAfter3TimesDifferentPassword() {
         var loginPage = open("http://localhost:9999", LoginPage.class);
         var threeTimesLogin = loginPage.threeTimesLoginDifferentPassword();
-        SQLHelper.getVasyaBlockedStatus();
+        SQLHelper.getUserBlockedStatus();
 
     }
 }
