@@ -7,6 +7,7 @@ import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Validat
 
 import java.time.Duration;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -19,20 +20,27 @@ public class VerificationPage {
         codeField.shouldBe(visible, Duration.ofSeconds(15));
     }
 
-    public DashboardPage validVerify(DataHelper.VerificationCode verificationCode) {
-        codeField.setValue(verificationCode.getCode());
+    public void codeInput(String verificationCode) {
+        codeField.setValue(verificationCode);
         verifyButton.click();
+    }
+
+    public DashboardPage validVerify(DataHelper.VerificationCode verificationCode) {
+        codeInput(verificationCode.getCode());
         return new DashboardPage();
     }
 
     public VerificationPage invalidVerify() {
-        codeField.setValue(String.valueOf(DataHelper.getRandomVerificationCode()));
-        verifyButton.click();
-        errorNotificationVisible();
+        codeInput(String.valueOf(DataHelper.getRandomVerificationCode()));
+        codeErrorNotification();
         return new VerificationPage();
     }
 
     public void errorNotificationVisible() {
-        errorNotification.shouldBe(visible, Duration.ofSeconds(15));
+        errorNotification.shouldBe(visible, Duration.ofSeconds(20));
+    }
+    public void codeErrorNotification() {
+        errorNotificationVisible();
+        errorNotification.shouldHave(text("Ошибка! Неверно указан код! Попробуйте ещё раз."));
     }
 }

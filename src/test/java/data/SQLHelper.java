@@ -39,10 +39,9 @@ public class SQLHelper {
     }
 
     @SneakyThrows
-    public static void getUserBlockedStatus() {
+    public static String getUserBlockedStatus() {
         var SQLStatus = "SELECT status FROM users WHERE login='vasya'";
         var connection = getConnection();
-        var status = runner.query(connection, SQLStatus, new ScalarHandler<String>());
-        Assertions.assertEquals("blocked", status);
+        return runner.query(connection, SQLStatus, new ScalarHandler<String>());
     }
 }
